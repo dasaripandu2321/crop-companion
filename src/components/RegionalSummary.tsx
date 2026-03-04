@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin, Cloud, Droplets, TrendingUp, Users, AlertCircle, CheckCircle2, Sprout } from "lucide-react";
+import { API_URL } from "@/config";
 
 interface RegionalSummaryProps {
   region: string;
@@ -62,7 +63,7 @@ export function RegionalSummary({ region, crop, soilData }: RegionalSummaryProps
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/regional-summary", {
+      const response = await fetch(`${API_URL}/api/regional-summary`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

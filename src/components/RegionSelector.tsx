@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { MapPin } from "lucide-react";
+import { API_URL } from "@/config";
 
 interface RegionSelectorProps {
   value: string;
@@ -19,7 +20,7 @@ export function RegionSelector({ value, onChange, className = "" }: RegionSelect
 
   const fetchRegions = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/regions");
+      const response = await fetch(`${API_URL}/api/regions`);
       const data = await response.json();
       setRegions(data.regions || []);
     } catch (error) {

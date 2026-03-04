@@ -1,6 +1,8 @@
 // Crop prediction engine using rule-based Gaussian Naive Bayes approximation
 // Based on typical crop requirements from agricultural datasets
 
+import { API_URL } from './config';
+
 interface CropProfile {
   name: string;
   emoji: string;
@@ -57,7 +59,7 @@ export interface PredictionResult {
 
 export async function predictCrop(input: PredictionInput): Promise<PredictionResult> {
   try {
-    const response = await fetch("http://localhost:5000/api/predict", {
+    const response = await fetch(`${API_URL}/api/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(input)
