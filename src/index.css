@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 145 30% 97%;
+    --foreground: 160 40% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 40% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 40% 8%;
+
+    --primary: 152 56% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 207 68% 48%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 145 20% 92%;
+    --muted-foreground: 160 10% 42%;
+
+    --accent: 85 60% 50%;
+    --accent-foreground: 160 40% 8%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 145 15% 88%;
+    --input: 145 15% 88%;
+    --ring: 152 56% 38%;
+
+    --radius: 1rem;
+
+    /* Custom tokens */
+    --gradient-hero: linear-gradient(135deg, hsl(152 56% 38%), hsl(207 68% 48%), hsl(152 40% 28%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.7), hsl(0 0% 100% / 0.3));
+    --gradient-success: linear-gradient(135deg, hsl(152 56% 38%), hsl(85 60% 50%));
+    --gradient-cta: linear-gradient(135deg, hsl(152 56% 45%), hsl(207 68% 52%));
+    --shadow-glass: 0 8px 32px hsl(152 56% 38% / 0.12);
+    --shadow-glow: 0 0 40px hsl(152 56% 38% / 0.25);
+    --shadow-card: 0 4px 24px hsl(160 40% 8% / 0.06);
+    --blur-glass: 16px;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Glass morphism utility */
+.glass {
+  background: var(--gradient-card);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  border: 1px solid hsl(0 0% 100% / 0.4);
+  box-shadow: var(--shadow-glass);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Success glow */
+@keyframes success-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(152 56% 38% / 0.2); }
+  50% { box-shadow: 0 0 40px hsl(152 56% 38% / 0.4); }
+}
+
+.animate-success-glow {
+  animation: success-glow 2s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Particle animation */
+@keyframes particle-drift {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
