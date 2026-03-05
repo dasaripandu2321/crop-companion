@@ -1,7 +1,7 @@
 // Crop prediction engine using rule-based Gaussian Naive Bayes approximation
 // Based on typical crop requirements from agricultural datasets
 
-import { API_URL } from './config';
+import { API_URL } from '../config';
 
 interface CropProfile {
   name: string;
