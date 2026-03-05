@@ -6,7 +6,7 @@
 
 // API Base URL - automatically switches between development and production
 export const API_URL = import.meta.env.PROD 
-  ? import.meta.env.VITE_API_URL || 'https://crop-companion-backend.onrender.com'  // Production URL (UPDATE THIS!)
+  ? import.meta.env.VITE_API_URL || 'https://crop-companion-backend.onrender.com'  // Production URL - Render Backend
   : 'http://localhost:5000';  // Development URL
 
 // Firebase is configured in src/lib/firebase.ts
