@@ -1,0 +1,198 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    FARM FUTURA AI - DEPLOYMENT ARCHITECTURE                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CURRENT STATUS (BROKEN)                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────┐
+    │  User's  │
+    │ Browser  │
+    └────┬─────┘
+         │
+         │ HTTPS
+         ▼
+    ┌────────────────┐
+    │     VERCEL     │ ✅ DEPLOYED
+    │   (Frontend)   │
+    │  React + Vite  │
+    └────┬───────────┘
+         │
+         │ Tries to connect to:
+         │ http://localhost:5000
+         ▼
+    ┌────────────────┐
+    │   localhost    │ ❌ DOESN'T EXIST
+    │   :5000        │    (only on your PC)
+    │   (Backend)    │
+    └────────────────┘
+         │
+         ▼
+    Result: "API Unreachable" 
+            Always predicts "Rice"
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        TARGET STATUS (WORKING)                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────┐
+    │  User's  │
+    │ Browser  │
+    └────┬─────┘
+         │
+         │ HTTPS
+         ▼
+    ┌────────────────┐
+    │     VERCEL     │ ✅ DEPLOYED
+    │   (Frontend)   │
+    │  React + Vite  │
+    └────┬───────────┘
+         │
+         │ HTTPS API calls
+         │ https://crop-companion-backend.onrender.com
+         ▼
+    ┌────────────────┐
+    │     RENDER     │ ⏳ NEEDS DEPLOYMENT
+    │   (Backend)    │
+    │ Flask + Python │
+    └────┬───────────┘
+         │
+         │ API calls
+         ▼
+    ┌────────────────┐
+    │  GEMINI API    │ ✅ CONFIGURED
+    │  (Google AI)   │
+    │   AI Advisory  │
+    └────────────────┘
+         │
+         ▼
+    Result: Real predictions! 
+            AI advisory works!
+            Regional summaries work!
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           DEPLOYMENT STEPS                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+STEP 1: Deploy Backend to Render (5 minutes)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  1. Go to: https://render.com                                               │
+│  2. Sign up with GitHub                                                     │
+│  3. Create "New Web Service"                                                │
+│  4. Select repo: dasaripandu2321/crop-companion                             │
+│  5. Configure:                                                              │
+│     • Root Directory: backend                                               │
+│     • Build Command: pip install -r requirements.txt                        │
+│     • Start Command: gunicorn app:app                                       │
+│     • Environment Variable:                                                 │
+│       GEMINI_API_KEY=AIzaSyBhvNml-KZ2s6EGzUEB5FughBIonij6c8E               │
+│  6. Click "Create Web Service"                                              │
+│  7. Wait 3-5 minutes                                                        │
+│  8. Copy your URL: https://crop-companion-backend-xyz.onrender.com          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+STEP 2: Update Frontend Config (2 minutes)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  1. Open: src/config.ts                                                     │
+│  2. Replace URL with your Render URL                                        │
+│  3. Run:                                                                    │
+│     git add src/config.ts                                                   │
+│     git commit -m "Connect to Render backend"                               │
+│     git push origin master                                                  │
+│  4. Vercel auto-redeploys (1-2 minutes)                                     │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+STEP 3: Test (1 minute)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  1. Visit your Vercel URL                                                   │
+│  2. Try a crop prediction                                                   │
+│  3. Should work correctly! 🎉                                               │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            SERVICES OVERVIEW                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────┬──────────────┬──────────┬─────────────────────────────────┐
+│   Service    │    Status    │   Cost   │          Purpose                │
+├──────────────┼──────────────┼──────────┼─────────────────────────────────┤
+│   Vercel     │ ✅ Deployed  │   FREE   │ Frontend hosting                │
+│   Render     │ ⏳ Pending   │   FREE   │ Backend API                     │
+│   Firebase   │ ✅ Active    │   FREE   │ User authentication             │
+│   Gemini AI  │ ✅ Active    │   FREE   │ AI-powered advisory             │
+│   GitHub     │ ✅ Active    │   FREE   │ Code repository                 │
+└──────────────┴──────────────┴──────────┴─────────────────────────────────┘
+
+Total Monthly Cost: $0 🎉
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          ENVIRONMENT VARIABLES                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+BACKEND (Render):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ GEMINI_API_KEY = AIzaSyBhvNml-KZ2s6EGzUEB5FughBIonij6c8E                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+FRONTEND (Vercel) - Optional:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ VITE_API_URL = https://your-render-url.onrender.com                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            TROUBLESHOOTING                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Problem: "API Unreachable"
+Solution: Backend not deployed yet. Follow STEP 1 above.
+
+Problem: Always predicts "Rice"
+Solution: Backend not connected. Complete all 3 steps above.
+
+Problem: "502 Bad Gateway"
+Solution: Free tier waking up. Wait 30-60 seconds and retry.
+
+Problem: Render build fails
+Solution: Check "Root Directory" is set to "backend"
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          DOCUMENTATION FILES                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📄 README_DEPLOYMENT.md           - Master index (start here)
+📄 HOW_TO_FIX_API_UNREACHABLE.md  - Fix current issues
+📄 DEPLOYMENT_QUICK_START.md      - 5-minute overview
+📄 DEPLOYMENT_STATUS.md           - Current status
+📄 RENDER_DEPLOYMENT_GUIDE.md     - Detailed Render guide
+📄 ENVIRONMENT_VARIABLES.md       - All env vars explained
+📄 ENV_QUICK_REFERENCE.md         - Quick env reference
+📄 DEPLOYMENT_DIAGRAM.txt         - This file
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              QUICK LINKS                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Render:     https://render.com
+Vercel:     https://vercel.com
+GitHub:     https://github.com/dasaripandu2321/crop-companion
+Firebase:   https://console.firebase.google.com
+Gemini API: https://makersuite.google.com/app/apikey
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    TOTAL DEPLOYMENT TIME: ~10 MINUTES                        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
