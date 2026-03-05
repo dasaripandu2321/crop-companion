@@ -165,6 +165,24 @@ def mock_predict(input_data):
 # ENDPOINTS
 # ---------------------------------------------------------
 
+@app.route('/', methods=['GET'])
+def home():
+    """Root endpoint to verify backend is running"""
+    return jsonify({
+        "status": "online",
+        "message": "Farm Futura AI Backend API",
+        "version": "1.0.0",
+        "endpoints": {
+            "predict": "/api/predict",
+            "regions": "/api/regions",
+            "regional_summary": "/api/regional-summary",
+            "chat": "/api/chat",
+            "forgot_password": "/api/forgot-password",
+            "verify_otp": "/api/verify-otp",
+            "reset_password": "/api/reset-password"
+        }
+    })
+
 @app.route('/api/predict', methods=['POST'])
 def predict():
     try:
